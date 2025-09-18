@@ -1,0 +1,10 @@
+{
+  "validPassword": "Pass@123",
+  "restrictedState": "New York",
+  "allowedState": "Texas",
+  "validDOB": "1990-05-10",
+  "underAgeDOB": "2015-01-01",
+  "address": "123 Main Street, Dallas, TX",
+  "zipcode": "12345",
+  "city": "Dallas"
+}

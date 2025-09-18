@@ -1,0 +1,37 @@
+
+{
+  "profiledata": 
+    {
+      "firstName": "Auto",
+      "lastName": "Mation",
+      "dateOfBirthYear": "2000",
+      "dateOfBirthDay": "September 5th",
+      "zipcode": "12345",
+      "city": "Naticen",
+      "address": "Kaeveli",
+      "state": "Florida"
+    },
+  "logindata": 
+    {
+      "username": "AutomationTest", 
+      "password": "Pass@1234"
+    }
+    ,
+  "emptylogindata": 
+    {
+      "emptyusername":" ",
+      "emptypassword": " "
+    },
+    "invalidlogindata":
+      {
+        "username":"AutomationTest",
+      "wrongusername":"test",
+      "wrongpassword": "test@123"
+    }
+  ,
+  "passwordchange": 
+    {
+      "currentPassword": "Pass@1234",
+      "newPassword": "NewPass@123"
+    }
+}
