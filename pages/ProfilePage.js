@@ -109,33 +109,34 @@ export class ProfilePage {
 
     }
     async invalidSignUp(data) {
-        let usernames = ['qa','qa user','qa@user','qauser!@#'];
-        let passwords = ['Pa','Pass123','Pass 123','pass@123','Passs@']
-        
-        const usernameErrorTxt= "Username must be at least 3 characters long and contain only letters and numbers without spaces.";
-        const emptyusernameerror="Username is required!";
-        const passwordErrorTXt="Password must be at least 6 characters with one uppercase, one lowercase, one number, and one special character. Spaces are not allowed.";
-        const emptypassworderror="Password is required!";
-        const checkboxErrorTxt="Please allow the Terms of Use, Privacy Policy, and Age/State restriction.";
+        let usernames = ['qa', 'qa user', 'qa@user', 'qauser!@#'];
+        let passwords = ['Pa', 'Pass123', 'Pass 123', 'pass@123', 'Passs@']
+
+        const usernameErrorTxt = "Username must be at least 3 characters long and contain only letters and numbers without spaces.";
+        const emptyusernameerror = "Username is required!";
+        const passwordErrorTXt = "Password must be at least 6 characters with one uppercase, one lowercase, one number, and one special character. Spaces are not allowed.";
+        const emptypassworderror = "Password is required!";
+        const checkboxErrorTxt = "Please allow the Terms of Use, Privacy Policy, and Age/State restriction.";
+        const existierror = "User already exists";
         // Try invalid username first
 
         await this.page.getByRole('tab', { name: 'Sign Up' }).click();
         await this.page.waitForTimeout(1000);
-        
+
         await this.page.click('//button[@type="submit" and contains(., "Sign Up")]');
         const usernameError = await this.page.locator('//label[contains(text(),"Username")]/parent::*//*[contains(@class, "text-red")]');
         const passwordError = await this.page.locator('//label[contains(text(),"Password")]/parent::*//*[contains(@class, "text-red")]');
         await expect(usernameError).toContainText(emptyusernameerror);
         await this.page.waitForTimeout(1000);
         await expect(passwordError).toContainText(emptypassworderror);
-    
+
         for (let i = 0; i < usernames.length; i++) {
             await this.page.locator('[placeholder="Username"]').fill(usernames[i]);
             console.log('Entered username:', usernames[i]);
             await this.page.click('//button[@type="submit" and contains(., "Sign Up")]');
             await this.page.waitForTimeout(1000);
             await expect(usernameError).toContainText(usernameErrorTxt);
-            
+
         }
         await this.page.locator('[placeholder="Username"]').fill(data.username);
         console.log('====================================================')
@@ -149,9 +150,15 @@ export class ProfilePage {
         await this.page.locator('[placeholder="Password"]').fill(data.password);
         await this.page.click('//button[@type="submit" and contains(., "Sign Up")]');
         // Handle missing checkbox errors
-        
-        const checkboxError=await this.page.locator('//div[contains(text(),"Error")]/following-sibling::*').first();
+
+        const cmnErrormsg = await this.page.locator('//div[contains(text(),"Error")]/following-sibling::*').first();
         await this.page.waitForTimeout(1000);
-        await expect(checkboxError).toContainText(checkboxErrorTxt);
+        await expect(cmnErrormsg).toContainText(checkboxErrorTxt);
+
+        await this.page.locator('//label[contains((.),"I accept the")]/parent::*//button').check();
+        await this.page.locator('//label[contains((.),"I am at least 18 years old ")]/parent::*//button').check();
+        await this.page.click('//button[@type="submit" and contains(., "Sign Up")]');
+        await this.page.waitForTimeout(1000);
+        await expect(cmnErrormsg).toContainText(existierror);
     }
 }

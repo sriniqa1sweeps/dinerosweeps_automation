@@ -16,6 +16,8 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. */
   reporter: 'html',
+  timeout: 1000 * 60 * 3,  // 3 minutes
+
 
   use: {
     trace: 'on-first-retry',
